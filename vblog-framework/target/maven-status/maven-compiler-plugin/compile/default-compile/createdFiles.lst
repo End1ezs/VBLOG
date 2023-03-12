@@ -8,7 +8,9 @@ com\vblog\config\MybatisPlusConfig.class
 com\vblog\utils\JwtUtil.class
 com\vblog\utils\RedisCache.class
 com\vblog\domain\entity\User.class
+com\vblog\exception\SystemException.class
 com\vblog\domain\vo\BlogUserLoginVo.class
 com\vblog\utils\WebUtils.class
+com\vblog\handler\exception\GlobalExceptionHandler.class
 com\vblog\mapper\UserMapper.class
 com\vblog\domain\vo\UserInfoVo.class
