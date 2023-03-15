@@ -559,7 +559,7 @@
               <option name="preName" value="sys_" />
               <option name="saveModelName" value="vblog-blog" />
               <option name="savePackageName" value="" />
-              <option name="savePath" value="./vblog-framework/src/main/java" />
+              <option name="savePath" value="./vblog-blog/src/main/java" />
               <option name="templateGroupName" value="MybatisPlus" />
             </TableInfoDTO>
           </value>
