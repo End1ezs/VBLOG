@@ -13,6 +13,10 @@ public enum AppHttpCodeEnum {
     FILE_TYPE_ERROR(507, "文件类型错误，请上传jpg文件"),
     REGISTER_NOT_NULL(508, "注册信息不完整"),
     USERNAME_EXIST(501, "用户名已存在"),
+    PASSWORD_NOT_NULL(520,"密码不为空"),
+    EMAIL_NOT_NULL(521,"邮箱不为空"),
+    NICKNAME_NOT_NULL(522,"昵称不为空"),
+
     PHONENUMBER_EXIST(502, "手机号已存在"),
     NICKNAME_EXIST(512, "昵称已存在"),
     LOGIN_ERROR(505, "用户名或密码错误"),

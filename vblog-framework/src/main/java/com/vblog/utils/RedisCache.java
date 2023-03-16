@@ -141,6 +141,10 @@ public class RedisCache
         return setOperation;
     }
 
+    public void incrementCacheMapValue(String key,String hKey,int v){
+        redisTemplate.opsForHash().increment(key,hKey,v);
+    }
+
     /**
      * 获得缓存的set
      *

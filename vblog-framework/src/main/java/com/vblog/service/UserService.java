@@ -1,6 +1,7 @@
 package com.vblog.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.vblog.domain.ResponseResult;
 import com.vblog.domain.entity.User;
 
 
@@ -12,5 +13,10 @@ import com.vblog.domain.entity.User;
  */
 public interface UserService extends IService<User> {
 
+    ResponseResult userInfo();
+
+    ResponseResult updateUserInfo(User user);
+
+    ResponseResult register(User user);
 }
 

@@ -46,7 +46,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/login").anonymous()
                 // logout路径必须携带token进行authenticate才能使用 下同
                 .antMatchers("/logout").authenticated()
-                .antMatchers("/link/getAllLink").authenticated()
+                .antMatchers("/user/userInfo").authenticated()
                 // 除上面外的所有请求全部不需要认证即可访问
                 .anyRequest().permitAll();
 

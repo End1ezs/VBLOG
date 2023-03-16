@@ -12,6 +12,9 @@ spring:
       multipart:
         max-file-size: 2MB
         max-request-size: 5MB
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
 
   # 配置redis
   redis:
@@ -37,4 +40,7 @@ mybatis-plus:
       logic-not-delete-value: 0
       id-type: auto
 
-
+oss:
+  accessKey: g7fnhxS9qjVfVieaQdbqBw_-ZMDQKxKGkCUp6u0D
+  secretKey: lvLVLAoSIT9hFvq9EeYlaiCX9UMFyckPZ8ZHzRsk
+  bucket: zyc-vblog
