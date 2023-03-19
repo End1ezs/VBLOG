@@ -25,5 +25,11 @@ public interface RoleService extends IService<Role> {
     ResponseResult changeStatus(ChangeRoleDto changeRoleDto);
 
     ResponseResult addRole(AddRoleDto addRoleDto);
+
+    ResponseResult getRole(long id);
+
+    ResponseResult updateRole(AddRoleDto addRoleDto);
+
+    ResponseResult deleteRole(Long id);
 }
 

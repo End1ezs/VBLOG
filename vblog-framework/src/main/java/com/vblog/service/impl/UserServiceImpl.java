@@ -1,9 +1,12 @@
 package com.vblog.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.vblog.domain.ResponseResult;
 import com.vblog.domain.entity.User;
+import com.vblog.domain.vo.PageVo;
+import com.vblog.domain.vo.UserAdminGetVo;
 import com.vblog.domain.vo.UserInfoVo;
 import com.vblog.enums.AppHttpCodeEnum;
 import com.vblog.exception.SystemException;
@@ -15,6 +18,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+
+import java.util.List;
 
 /**
  * 用户表(User)表服务实现类
@@ -76,11 +81,25 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         return ResponseResult.okResult();
     }
 
+    @Override
+    public ResponseResult getUserlist(Integer pageNum, Integer pageSize, String userName, String phonenumber, String status) {
+        Page<User> page = new Page<>(pageNum, pageSize);
+        LambdaQueryWrapper<User>lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.eq(StringUtils.hasText(userName),User::getUserName,userName);
+        lambdaQueryWrapper.eq(StringUtils.hasText(phonenumber),User::getPhonenumber,phonenumber);
+        lambdaQueryWrapper.eq(StringUtils.hasText(status),User::getStatus,status);
+        page(page,lambdaQueryWrapper);
+        List<UserAdminGetVo> userAdminGetVos = BeanCopyUtils.copyBeanList(page.getRecords(), UserAdminGetVo.class);
+        PageVo pageVo = new PageVo(userAdminGetVos, page.getTotal());
+        return ResponseResult.okResult(pageVo);
+    }
+
     private boolean userNameExist(String userName) {
         LambdaQueryWrapper<User> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         lambdaQueryWrapper.eq(User::getUserName, userName);
         return count(lambdaQueryWrapper) > 0;
     }
+
     private boolean nickNameExist(String nickName) {
         LambdaQueryWrapper<User> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         lambdaQueryWrapper.eq(User::getNickName, nickName);

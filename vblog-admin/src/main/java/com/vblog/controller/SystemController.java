@@ -37,4 +37,9 @@ public class SystemController {
     public ResponseResult getTreeselect() {
         return menuService.getTreeselect();
     }
+
+    @GetMapping("/roleMenuTreeselect/{id}")
+    public ResponseResult roleMenuTreeselect(@PathVariable Long id) {
+        return menuService.roleMenuTreeselect(id);
+    }
 }

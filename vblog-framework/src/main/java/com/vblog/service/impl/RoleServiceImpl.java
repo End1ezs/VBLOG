@@ -1,6 +1,8 @@
 package com.vblog.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.injector.methods.Delete;
+import com.baomidou.mybatisplus.core.injector.methods.DeleteById;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.vblog.domain.ResponseResult;
@@ -85,7 +87,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
         Role role = BeanCopyUtils.copyBean(addRoleDto, Role.class);
         save(role);
         LambdaQueryWrapper<Role> lambdaQueryWrapper = new LambdaQueryWrapper<>();
-        lambdaQueryWrapper.eq(Role::getRoleKey,addRoleDto.getRoleKey());
+        lambdaQueryWrapper.eq(Role::getRoleKey, addRoleDto.getRoleKey());
         List<Role> rolelist = list(lambdaQueryWrapper);
         Long roleid = null;
         for (Role role1 : rolelist) {
@@ -98,6 +100,45 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
             roleMenu.setMenuId(Long.valueOf(menuid));
             roleMenuService.save(roleMenu);
         }
+        return ResponseResult.okResult();
+    }
+
+    @Override
+    public ResponseResult getRole(long id) {
+        Role role = roleMapper.selectById(id);
+        RoleVo roleVo = BeanCopyUtils.copyBean(role, RoleVo.class);
+        return ResponseResult.okResult(roleVo);
+    }
+
+    @Transactional
+    @Override
+    public ResponseResult updateRole(AddRoleDto addRoleDto) {
+        Role role = BeanCopyUtils.copyBean(addRoleDto, Role.class);
+        updateById(role);
+
+        LambdaQueryWrapper<Role> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.eq(Role::getRoleKey, addRoleDto.getRoleKey());
+        List<Role> rolelist = list(lambdaQueryWrapper);
+        Long roleid = null;
+        for (Role role1 : rolelist) {
+            roleid = role1.getId();
+            roleMenuMapper.deleteById(roleid);
+        }
+
+        List<String> MenuIds = addRoleDto.getMenuIds();
+
+        for (String menuid : MenuIds) {
+            RoleMenu roleMenu = new RoleMenu();
+            roleMenu.setRoleId(roleid);
+            roleMenu.setMenuId(Long.valueOf(menuid));
+            roleMenuService.save(roleMenu);
+        }
+        return ResponseResult.okResult();
+    }
+
+    @Override
+    public ResponseResult deleteRole(Long id) {
+        roleMapper.deleteById(id);
         return ResponseResult.okResult();
     }
 }

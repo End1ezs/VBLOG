@@ -27,5 +27,16 @@ public class RoleController {
     public ResponseResult addRole(@RequestBody AddRoleDto addRoleDto) {
         return roleService.addRole(addRoleDto);
     }
-
+    @GetMapping("{id}")
+    public ResponseResult getRole(@PathVariable long id) {
+        return roleService.getRole(id);
+    }
+    @PutMapping
+    public ResponseResult updateRole(@RequestBody AddRoleDto addRoleDto){
+        return roleService.updateRole(addRoleDto);
+    }
+    @DeleteMapping("{id}")
+    public ResponseResult deleteRole(@PathVariable Long id){
+        return roleService.deleteRole(id);
+    }
 }

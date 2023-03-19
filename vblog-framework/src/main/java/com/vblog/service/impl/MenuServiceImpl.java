@@ -2,24 +2,26 @@ package com.vblog.service.impl;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.injector.methods.SelectById;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.vblog.constants.SystemConstants;
 import com.vblog.domain.ResponseResult;
 import com.vblog.domain.entity.Menu;
+import com.vblog.domain.entity.RoleMenu;
+import com.vblog.domain.entity.UserRole;
 import com.vblog.domain.vo.MenuTreeVo;
 import com.vblog.domain.vo.MenuVo;
+import com.vblog.domain.vo.UserMenuVo;
 import com.vblog.mapper.MenuMapper;
+import com.vblog.mapper.UserRoleMapper;
 import com.vblog.service.MenuService;
+import com.vblog.service.RoleMenuService;
 import com.vblog.utils.BeanCopyUtils;
 import com.vblog.utils.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import java.util.List;
-import java.util.Objects;
-import java.util.function.Function;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -32,7 +34,10 @@ import java.util.stream.Collectors;
 public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements MenuService {
     @Autowired
     private MenuMapper menuMapper;
-
+    @Autowired
+    private RoleMenuService roleMenuService;
+    @Autowired
+    private UserRoleMapper userRoleMapper;
     @Override
     public List<String> selectPermsByUserId(Long id) {
         // 根据用户id查询对应的权限关键字
@@ -126,6 +131,45 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
         List<MenuTreeVo> menuTreeVos = BeanCopyUtils.copyBeanList(list, MenuTreeVo.class);
         List<MenuTreeVo> menuTree = builderMenuTree1(menuTreeVos, 0L);
         return ResponseResult.okResult(menuTree);
+    }
+
+    @Override
+    public ResponseResult roleMenuTreeselect(Long id) {
+        MenuMapper menuMapper = getBaseMapper();
+        List<Menu> menus = null;
+        // 判断是否是管理员
+        if (SecurityUtils.isAdmin()) {
+            // 如果是 返回所有符合需求的menu
+            menus = menuMapper.selectAllRouterMenu();
+        } else {
+            // 否则返回当前用户具有的Menu
+            menus = menuMapper.selectRouterMenuTreeByUserId(id);
+        }
+        List<MenuTreeVo> menuTreeVos = BeanCopyUtils.copyBeanList(menus, MenuTreeVo.class);
+        List<MenuTreeVo> menuTreevo = builderMenuTree1(menuTreeVos, 0L);
+
+        //用户查角色
+        LambdaQueryWrapper<UserRole> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.eq(UserRole::getUserId,id);
+        List<UserRole> userRoles = userRoleMapper.selectList(lambdaQueryWrapper);
+        List<String> role_ids = new ArrayList<>();
+        for (UserRole userRole : userRoles) {
+            String s = userRole.getRoleId().toString();
+            role_ids.add(s);
+        }
+        //   角色查菜单权限
+        Set<String> menu_ids =new HashSet<>();
+        for (String roleId : role_ids) {
+            LambdaQueryWrapper<RoleMenu> lambdaQueryWrapper1 = new LambdaQueryWrapper<>();
+            lambdaQueryWrapper1.eq(RoleMenu::getRoleId, roleId);
+            List<RoleMenu> list = roleMenuService.list(lambdaQueryWrapper1);
+            for (RoleMenu roleMenu : list) {
+                menu_ids.add(roleMenu.getMenuId().toString());
+            }
+        }
+        List<String>list_menuids = new ArrayList<String>(menu_ids);
+        UserMenuVo roleVo = new UserMenuVo(menuTreevo,list_menuids);
+        return ResponseResult.okResult(roleVo);
     }
 
 
