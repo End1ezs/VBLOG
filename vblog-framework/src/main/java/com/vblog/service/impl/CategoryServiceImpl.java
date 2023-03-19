@@ -13,6 +13,7 @@ import com.vblog.service.ArticleService;
 import com.vblog.service.CategoryService;
 import com.vblog.utils.BeanCopyUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -41,10 +42,19 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryMapper, Category> i
         // 2.按照浏览量进行排序
         Set<Long> categoryIds = articleList.stream().map(article -> article.getCategoryId()).collect(Collectors.toSet());
 
-        List<Category> categories =listByIds(categoryIds);
+        List<Category> categories = listByIds(categoryIds);
 
         categories = categories.stream().filter(category -> SystemConstants.CATEGORY_STATUS_NORMAL.equals(category.getStatus())).collect(Collectors.toList());
-        List<CategoryVo>categoryvo = BeanCopyUtils.copyBeanList(categories, CategoryVo.class);
+        List<CategoryVo> categoryvo = BeanCopyUtils.copyBeanList(categories, CategoryVo.class);
         return ResponseResult.okResult(categoryvo);
+    }
+
+    @Override
+    public ResponseResult<CategoryVo> listAllCategory() {
+        LambdaQueryWrapper<Category> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(Category::getStatus, SystemConstants.NORMAL);
+        List<Category> list = list(wrapper);
+        List<CategoryVo> categoriesvo = BeanCopyUtils.copyBeanList(list, CategoryVo.class);
+        return ResponseResult.okResult(categoriesvo);
     }
 }

@@ -2,10 +2,14 @@ package com.vblog.service.impl;
 
 import com.vblog.domain.ResponseResult;
 import com.vblog.domain.entity.LoginUser;
+import com.vblog.domain.entity.Menu;
 import com.vblog.domain.entity.User;
-import com.vblog.service.SystemLoginService;
+import com.vblog.service.LoginService;
+
+import com.vblog.service.MenuService;
 import com.vblog.utils.JwtUtil;
 import com.vblog.utils.RedisCache;
+import com.vblog.utils.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -16,8 +20,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 @Service
-public class SystemLoginServiceImpl implements SystemLoginService {
-
+public class SystemLoginServiceImpl implements LoginService {
+    @Autowired
+    private MenuService menuService;
 
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -43,4 +48,12 @@ public class SystemLoginServiceImpl implements SystemLoginService {
         return ResponseResult.okResult(map);
 
     }
+
+    @Override
+    public ResponseResult logout() {
+        Long userId = SecurityUtils.getUserId();
+        redisCache.deleteObject("login"+userId);
+        return ResponseResult.okResult();
+    }
+
 }

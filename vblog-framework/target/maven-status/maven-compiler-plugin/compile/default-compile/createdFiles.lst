@@ -29,6 +29,8 @@ com\vblog\config\FastJsonRedisSerializer.class
 com\vblog\service\ArticleService.class
 com\vblog\enums\AppHttpCodeEnum.class
 com\vblog\service\BlogLoginService.class
+com\vblog\domain\entity\Tag.class
+com\vblog\service\TagService.class
 com\vblog\service\CommentService.class
 com\vblog\domain\entity\Link.class
 com\vblog\domain\vo\HotArticleVo.class
@@ -40,8 +42,10 @@ com\vblog\config\MybatisPlusConfig.class
 com\vblog\domain\vo\LinkVo.class
 com\vblog\mapper\CategoryMapper.class
 com\vblog\utils\JwtUtil.class
+com\vblog\domain\dto\TagListDto.class
 com\vblog\service\impl\CommentServiceImpl.class
 com\vblog\aspect\LogAspect.class
+com\vblog\service\impl\TagServiceImpl.class
 com\vblog\service\impl\OssUploadServiceImpl.class
 com\vblog\config\WebConfig.class
 com\vblog\domain\vo\CommentVo.class

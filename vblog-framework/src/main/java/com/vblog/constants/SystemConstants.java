@@ -99,5 +99,6 @@ public class SystemConstants {
     public static final String ARTICLE_CATEGORY = "文章分类";
 
 
+    public static final String NORMAL = "0";
 }
 

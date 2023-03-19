@@ -1,6 +1,7 @@
 E:\java\VBLOG\vblog-blog\src\main\java\com\vblog\runner\TestRunner.java
 E:\java\VBLOG\vblog-blog\src\main\java\com\vblog\controller\CommentController.java
 E:\java\VBLOG\vblog-blog\src\main\java\com\vblog\controller\UploadController.java
+E:\java\VBLOG\vblog-blog\src\main\java\com\vblog\config\SwaggerConfig.java
 E:\java\VBLOG\vblog-blog\src\main\java\com\vblog\job\UpdateViewCountJob.java
 E:\java\VBLOG\vblog-blog\src\main\java\com\vblog\controller\UserController.java
 E:\java\VBLOG\vblog-blog\src\main\java\com\vblog\filter\JwtAuthenticationTokenFilter.java
