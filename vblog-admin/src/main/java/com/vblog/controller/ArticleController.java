@@ -75,15 +75,38 @@ public class ArticleController {
     public ResponseResult<ArticleSelectVo> selectArticle(@PathVariable Long id) {
         return articleService.selectArticle(id);
     }
+
     @PutMapping("/article")
     public ResponseResult updateArticle(@RequestBody AddArticleDto addArticleDto) {
         return articleService.updateArticle(addArticleDto);
     }
+
     @DeleteMapping("/article/{id}")
     public ResponseResult deleteArticle(@PathVariable Long id) {
         return articleService.deleteArticle(id);
     }
 
+    @GetMapping("/category/list")
+    public ResponseResult getCategoryList(@RequestParam Integer pageNum, Integer pageSize, String name, String status) {
+        return articleService.getCategoryList(pageNum, pageSize, name, status);
+    }
+    @PostMapping("/category")
+    public ResponseResult addCategory(@RequestBody CategoryVo categoryVo) {
+        return articleService.addCategory(categoryVo);
+    }
+
+    @GetMapping("/category/{id}")
+    public ResponseResult getCategory(@PathVariable Long id) {
+        return articleService.getCategory(id);
+    }
+    @PutMapping("/category")
+    public ResponseResult updateCategory(@RequestBody CategoryVo categoryVo) {
+        return articleService.updateCategory(categoryVo);
+    }
+    @DeleteMapping("/category/{id}")
+    public ResponseResult deleteCategory(@PathVariable Long id) {
+        return articleService.deleteCategory(id);
+    }
 }
 
 

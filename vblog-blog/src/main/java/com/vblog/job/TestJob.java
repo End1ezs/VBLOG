@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class TestJob {
     // 使用cron属性 指定定时任务执行时间
-    @Scheduled(cron = "0/5 * * * * ?")
+//    @Scheduled(cron = "0/5 * * * * ?")
     public void testJob(){
         System.out.println("定时任务执行了");
     }

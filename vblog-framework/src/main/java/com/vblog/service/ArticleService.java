@@ -32,4 +32,13 @@ public interface ArticleService extends IService<Article> {
     ResponseResult deleteArticle(Long id);
 
 
+    ResponseResult getCategoryList(Integer pageNum, Integer pageSize, String name, String status);
+
+    ResponseResult addCategory(CategoryVo categoryVo);
+
+    ResponseResult getCategory(Long id);
+
+    ResponseResult updateCategory(CategoryVo categoryVo);
+
+    ResponseResult deleteCategory(Long id);
 }

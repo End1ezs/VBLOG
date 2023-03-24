@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
  * @since 2023-03-12 09:46:38
  */
 //@Repository(value="userMapper")
+@Mapper
 public interface UserMapper extends BaseMapper<User> {
 
 }

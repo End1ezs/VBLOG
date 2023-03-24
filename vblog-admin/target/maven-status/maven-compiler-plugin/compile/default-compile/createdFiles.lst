@@ -1,0 +1,12 @@
+com\vblog\controller\ArticleController.class
+com\vblog\BlogAdminApplication.class
+com\vblog\filter\JwtAuthenticationTokenFilter.class
+com\vblog\controller\UploadController.class
+com\vblog\controller\AdminUserInfoVo.class
+com\vblog\controller\RoleController.class
+com\vblog\controller\LinkController.class
+com\vblog\controller\TagController.class
+com\vblog\controller\SystemController.class
+com\vblog\config\SecurityConfig.class
+com\vblog\controller\UserController.class
+com\vblog\controller\LoginController.class

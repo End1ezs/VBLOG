@@ -4,10 +4,7 @@ import java.util.Date;
 import java.io.Serializable;
 import java.util.List;
 
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,7 +22,7 @@ import lombok.experimental.Accessors;
 @NoArgsConstructor
 @TableName("sg_article")
 @Accessors(chain=true)
-public class Article {
+public class Article implements Serializable{
     @TableId
     private Long id;
     //标题
@@ -46,6 +43,7 @@ public class Article {
     //状态（0已发布，1草稿）
     private String status;
     //访问量
+
     private Long viewCount;
     //是否允许评论 1是，0否
     private String isComment;

@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+
 @Service
 public class SystemLoginServiceImpl implements LoginService {
     @Autowired
@@ -28,6 +29,7 @@ public class SystemLoginServiceImpl implements LoginService {
     private AuthenticationManager authenticationManager;
     @Autowired
     private RedisCache redisCache;
+
     @Override
     public ResponseResult login(User user) {
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(user.getUserName(), user.getPassword());
@@ -43,8 +45,8 @@ public class SystemLoginServiceImpl implements LoginService {
         // 把用户信息存入redis
         redisCache.setCacheObject("login" + userId, loginUser);
         // 把User转换成UserInfoVo
-        Map<String,String> map = new HashMap<>();
-        map.put("token",jwt);
+        Map<String, String> map = new HashMap<>();
+        map.put("token", jwt);
         return ResponseResult.okResult(map);
 
     }
@@ -52,7 +54,7 @@ public class SystemLoginServiceImpl implements LoginService {
     @Override
     public ResponseResult logout() {
         Long userId = SecurityUtils.getUserId();
-        redisCache.deleteObject("login"+userId);
+        redisCache.deleteObject("login" + userId);
         return ResponseResult.okResult();
     }
 

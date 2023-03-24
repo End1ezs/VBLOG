@@ -2,6 +2,7 @@ package com.vblog.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.vblog.domain.entity.UserRole;
+import org.apache.ibatis.annotations.Mapper;
 
 
 /**
@@ -10,6 +11,7 @@ import com.vblog.domain.entity.UserRole;
  * @author makejava
  * @since 2023-03-19 16:05:48
  */
+@Mapper
 public interface UserRoleMapper extends BaseMapper<UserRole> {
 
 }

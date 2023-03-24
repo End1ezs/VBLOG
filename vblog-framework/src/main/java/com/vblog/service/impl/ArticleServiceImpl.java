@@ -200,5 +200,43 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         return ResponseResult.okResult();
     }
 
+    @Override
+    public ResponseResult getCategoryList(Integer pageNum, Integer pageSize, String name, String status) {
+        LambdaQueryWrapper<Category> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.eq(StringUtils.hasText(name), Category::getName, name);
+        lambdaQueryWrapper.eq(StringUtils.hasText(status), Category::getStatus, status);
+        List<Category> list = categoryService.list(lambdaQueryWrapper);
+        List<CategoryVo> categoryVos = BeanCopyUtils.copyBeanList(list, CategoryVo.class);
+        PageVo pageVo = new PageVo(categoryVos, (long) categoryVos.size());
+        return ResponseResult.okResult(pageVo);
+    }
+
+    @Override
+    public ResponseResult addCategory(CategoryVo categoryVo) {
+        Category category = BeanCopyUtils.copyBean(categoryVo, Category.class);
+        categoryService.save(category);
+        return ResponseResult.okResult();
+    }
+
+    @Override
+    public ResponseResult getCategory(Long id) {
+        Category category = categoryService.getById(id);
+        CategoryVo categoryVo = BeanCopyUtils.copyBean(category, CategoryVo.class);
+        return ResponseResult.okResult(categoryVo);
+    }
+
+    @Override
+    public ResponseResult updateCategory(CategoryVo categoryVo) {
+        Category category = BeanCopyUtils.copyBean(categoryVo, Category.class);
+        categoryService.updateById(category);
+        return ResponseResult.okResult();
+    }
+
+    @Override
+    public ResponseResult deleteCategory(Long id) {
+        categoryService.removeById(id);
+        return ResponseResult.okResult();
+    }
+
 
 }

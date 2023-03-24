@@ -1,9 +1,9 @@
 com\vblog\controller\ArticleController.class
 com\vblog\filter\JwtAuthenticationTokenFilter.class
 com\vblog\VblogApplication.class
+com\vblog\config\SwaggerConfig.class
 com\vblog\controller\UploadController.class
 com\vblog\controller\BlogLoginController.class
-com\vblog\controller\RoleController.class
 com\vblog\controller\LinkController.class
 com\vblog\runner\ViewCountRunner.class
 com\vblog\job\UpdateViewCountJob.class

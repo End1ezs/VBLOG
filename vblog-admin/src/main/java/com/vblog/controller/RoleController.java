@@ -18,6 +18,10 @@ public class RoleController {
     public ResponseResult getRoleList(Integer pageNum, Integer pageSize, String roleName, String status) {
         return roleService.getRoleList(pageNum, pageSize, roleName, status);
     }
+    @GetMapping("/listAllRole")
+    public ResponseResult listAllRole() {
+        return roleService.listAllRole();
+    }
     @PutMapping("/changeStatus")
     public ResponseResult changeStatus(@RequestBody ChangeRoleDto changeRoleDto) {
         return roleService.changeStatus(changeRoleDto);
@@ -39,4 +43,6 @@ public class RoleController {
     public ResponseResult deleteRole(@PathVariable Long id){
         return roleService.deleteRole(id);
     }
+
+
 }

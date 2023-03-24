@@ -141,4 +141,13 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
         roleMapper.deleteById(id);
         return ResponseResult.okResult();
     }
+
+    @Override
+    public ResponseResult listAllRole() {
+        LambdaQueryWrapper<Role>lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.eq(Role::getDelFlag,"0");
+        List<Role> list = list(lambdaQueryWrapper);
+
+        return ResponseResult.okResult(list);
+    }
 }
